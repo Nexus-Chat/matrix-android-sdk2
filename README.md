@@ -10,6 +10,9 @@ The SDK is still in beta, and replaces the [legacy Matrix Android SDK](https://g
 
 <b>For now, this project is an extract of the Matrix SDK module from Element Android. Please do not open a pull request on this project. If you want to propose a change on the SDK, please open a PR on https://github.com/vector-im/element-android. Thanks!</b>
 
+## Disclaimer
+This is a fork of the original repository, with an implementation for multiple account login.
+
 ## About
 
 This repository contains the matrix-android-sdk extracted from the project [Element Android](https://github.com/vector-im/element-android)
