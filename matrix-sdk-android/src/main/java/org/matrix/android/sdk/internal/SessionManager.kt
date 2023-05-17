@@ -19,6 +19,7 @@ package org.matrix.android.sdk.internal
 import org.matrix.android.sdk.api.auth.data.SessionParams
 import org.matrix.android.sdk.api.auth.data.sessionId
 import org.matrix.android.sdk.api.session.Session
+import org.matrix.android.sdk.api.session.user.model.User
 import org.matrix.android.sdk.internal.auth.SessionParamsStore
 import org.matrix.android.sdk.internal.di.MatrixComponent
 import org.matrix.android.sdk.internal.di.MatrixScope
@@ -26,6 +27,9 @@ import org.matrix.android.sdk.internal.session.DaggerSessionComponent
 import org.matrix.android.sdk.internal.session.SessionComponent
 import javax.inject.Inject
 
+data class UserInfo(
+    val userId: String
+)
 @MatrixScope
 internal class SessionManager @Inject constructor(
         private val matrixComponent: MatrixComponent,
@@ -40,6 +44,9 @@ internal class SessionManager @Inject constructor(
         return getOrCreateSessionComponent(sessionParams)
     }
 
+    fun getSessionsInfo(): List<UserInfo>{
+        return sessionParamsStore.getAll().map { UserInfo(userId = it.userId) }
+    }
     fun getLastSession(): Session? {
         val sessionParams = sessionParamsStore.getLast()
         return sessionParams?.let {
