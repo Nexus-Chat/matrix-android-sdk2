@@ -139,5 +139,13 @@ interface AuthenticationService {
             deviceId: String? = null
     ): Session
 
+    /**
+     * Get a list from all the used session in storage
+     */
     fun getAuthenticatedSessions() : List<Session?>
+
+    /**
+     * Try and create a session from data saved in storage
+     */
+    suspend fun loginUsingStoredSession(sessionId: String) : Session?
 }

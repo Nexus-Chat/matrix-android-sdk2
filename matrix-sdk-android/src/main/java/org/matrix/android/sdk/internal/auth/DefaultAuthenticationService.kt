@@ -84,6 +84,15 @@ internal class DefaultAuthenticationService @Inject constructor(
         return sessionManager.getSessions()
     }
 
+    override suspend fun loginUsingStoredSession(sessionId: String) : Session? {
+        val params = sessionParamsStore.get(sessionId)
+        params?.let {
+            return sessionManager.getOrCreateSession(it)
+        }
+
+        return null
+    }
+
     override suspend fun getLoginFlowOfSession(sessionId: String): LoginFlowResult {
         val homeServerConnectionConfig = sessionParamsStore.get(sessionId)?.homeServerConnectionConfig
                 ?: throw IllegalStateException("Session not found")

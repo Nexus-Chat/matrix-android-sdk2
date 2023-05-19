@@ -68,6 +68,9 @@ internal class RealmSessionParamsStore @Inject constructor(
         awaitTransaction(realmConfiguration) {
             val entity = mapper.map(sessionParams)
             if (entity != null) {
+
+                // remove old duplicates
+                it.where(SessionParamsEntity::class.java).equalTo("userId", entity.userId).findAll().deleteAllFromRealm()
                 try {
                     it.insert(entity)
                 } catch (e: RealmPrimaryKeyConstraintException) {
