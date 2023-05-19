@@ -23,6 +23,7 @@ import javax.inject.Inject
 
 internal class DefaultSignOutService @Inject constructor(
         private val signOutTask: SignOutTask,
+        private val signOutAndCleanupTask: SignOutAndCleanupTask,
         private val signInAgainTask: SignInAgainTask,
         private val sessionParamsStore: SessionParamsStore
 ) : SignOutService {
@@ -37,5 +38,9 @@ internal class DefaultSignOutService @Inject constructor(
 
     override suspend fun signOut(signOutFromHomeserver: Boolean) {
         return signOutTask.execute(SignOutTask.Params(signOutFromHomeserver))
+    }
+
+    override suspend fun signOutAndCleanup(signOutFromHomeserver: Boolean) {
+        return signOutAndCleanupTask.execute(SignOutTask.Params(signOutFromHomeserver))
     }
 }

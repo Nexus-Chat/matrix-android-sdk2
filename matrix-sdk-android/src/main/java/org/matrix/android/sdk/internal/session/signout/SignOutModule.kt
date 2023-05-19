@@ -40,6 +40,9 @@ internal abstract class SignOutModule {
     abstract fun bindSignOutTask(task: DefaultSignOutTask): SignOutTask
 
     @Binds
+    abstract fun bindSingOutAndCleanupTask(task: DefaultSignOutAndCleanupTask) : SignOutAndCleanupTask
+
+    @Binds
     abstract fun bindSignInAgainTask(task: DefaultSignInAgainTask): SignInAgainTask
 
     @Binds

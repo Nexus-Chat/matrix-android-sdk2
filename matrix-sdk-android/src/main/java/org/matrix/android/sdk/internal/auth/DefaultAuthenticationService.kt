@@ -24,10 +24,7 @@ import org.matrix.android.sdk.api.MatrixPatterns.getServerName
 import org.matrix.android.sdk.api.auth.AuthenticationService
 import org.matrix.android.sdk.api.auth.LoginType
 import org.matrix.android.sdk.api.auth.SSOAction
-import org.matrix.android.sdk.api.auth.data.Credentials
-import org.matrix.android.sdk.api.auth.data.HomeServerConnectionConfig
-import org.matrix.android.sdk.api.auth.data.LoginFlowResult
-import org.matrix.android.sdk.api.auth.data.LoginFlowTypes
+import org.matrix.android.sdk.api.auth.data.*
 import org.matrix.android.sdk.api.auth.login.LoginWizard
 import org.matrix.android.sdk.api.auth.registration.RegistrationWizard
 import org.matrix.android.sdk.api.auth.wellknown.WellknownResult
@@ -52,6 +49,7 @@ import org.matrix.android.sdk.internal.network.RetrofitFactory
 import org.matrix.android.sdk.internal.network.executeRequest
 import org.matrix.android.sdk.internal.network.httpclient.addSocketFactory
 import org.matrix.android.sdk.internal.network.ssl.UnrecognizedCertificateException
+import org.matrix.android.sdk.internal.session.SessionComponent
 import org.matrix.android.sdk.internal.wellknown.GetWellknownTask
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
@@ -80,6 +78,10 @@ internal class DefaultAuthenticationService @Inject constructor(
 
     override fun getLastAuthenticatedSession(): Session? {
         return sessionManager.getLastSession()
+    }
+
+    override fun getAuthenticatedSessions() : List<Session?>{
+        return sessionManager.getSessions()
     }
 
     override suspend fun getLoginFlowOfSession(sessionId: String): LoginFlowResult {

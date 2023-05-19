@@ -138,4 +138,6 @@ interface AuthenticationService {
             initialDeviceName: String? = null,
             deviceId: String? = null
     ): Session
+
+    fun getAuthenticatedSessions() : List<Session?>
 }
