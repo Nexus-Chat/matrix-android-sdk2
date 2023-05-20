@@ -19,6 +19,7 @@ package org.matrix.android.sdk.api.auth
 import org.matrix.android.sdk.api.auth.data.Credentials
 import org.matrix.android.sdk.api.auth.data.HomeServerConnectionConfig
 import org.matrix.android.sdk.api.auth.data.LoginFlowResult
+import org.matrix.android.sdk.api.auth.data.SessionParams
 import org.matrix.android.sdk.api.auth.login.LoginWizard
 import org.matrix.android.sdk.api.auth.registration.RegistrationWizard
 import org.matrix.android.sdk.api.auth.wellknown.WellknownResult
@@ -142,7 +143,7 @@ interface AuthenticationService {
     /**
      * Get a list from all the used session in storage
      */
-    fun getAuthenticatedSessions() : List<Session?>
+    fun getAuthenticatedSessions() : List<SessionParams>
 
     /**
      * Try and create a session from data saved in storage

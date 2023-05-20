@@ -52,6 +52,8 @@ data class SessionParams(
      */
     val userId = credentials.userId
 
+    val sessionId = credentials.sessionId()
+
     /**
      * The deviceId of the session (Ex: "ABCDEFGH").
      */

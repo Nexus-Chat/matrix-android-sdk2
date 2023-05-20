@@ -80,8 +80,8 @@ internal class DefaultAuthenticationService @Inject constructor(
         return sessionManager.getLastSession()
     }
 
-    override fun getAuthenticatedSessions() : List<Session?>{
-        return sessionManager.getSessions()
+    override fun getAuthenticatedSessions() : List<SessionParams>{
+        return sessionManager.getSessionsParams()
     }
 
     override suspend fun loginUsingStoredSession(sessionId: String) : Session? {
