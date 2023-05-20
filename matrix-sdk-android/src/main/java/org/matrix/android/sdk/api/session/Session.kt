@@ -97,6 +97,8 @@ interface Session {
      */
     suspend fun clearCache()
 
+    fun stopActiveTasks()
+
     /**
      * This method allow to close a session. It does stop some services.
      */

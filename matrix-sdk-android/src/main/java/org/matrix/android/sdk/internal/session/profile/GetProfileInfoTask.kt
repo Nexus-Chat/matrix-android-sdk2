@@ -20,6 +20,8 @@ package org.matrix.android.sdk.internal.session.profile
 import com.zhuinden.monarchy.Monarchy
 import org.matrix.android.sdk.api.session.user.model.User
 import org.matrix.android.sdk.api.util.JsonDict
+import org.matrix.android.sdk.internal.database.model.UserEntity
+import org.matrix.android.sdk.internal.database.query.where
 import org.matrix.android.sdk.internal.di.SessionDatabase
 import org.matrix.android.sdk.internal.network.GlobalErrorReceiver
 import org.matrix.android.sdk.internal.network.executeRequest
@@ -52,5 +54,12 @@ internal class DefaultGetProfileInfoTask @Inject constructor(
                 }
             }
         }
+    }
+
+    suspend fun profileLive(profileId: String){
+        val e = monarchy.findAllMappedWithChanges(
+            {realm -> UserEntity.where(realm, profileId)},
+            {}
+        )
     }
 }

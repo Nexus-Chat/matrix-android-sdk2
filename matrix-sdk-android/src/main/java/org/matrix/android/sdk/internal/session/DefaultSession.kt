@@ -16,6 +16,7 @@
 
 package org.matrix.android.sdk.internal.session
 
+import android.media.session.MediaSessionManager
 import androidx.annotation.MainThread
 import dagger.Lazy
 import io.realm.RealmConfiguration
@@ -64,6 +65,7 @@ import org.matrix.android.sdk.api.session.typing.TypingUsersTracker
 import org.matrix.android.sdk.api.session.user.UserService
 import org.matrix.android.sdk.api.session.widgets.WidgetService
 import org.matrix.android.sdk.api.util.appendParamToUrl
+import org.matrix.android.sdk.internal.SessionManager
 import org.matrix.android.sdk.internal.auth.SSO_UIA_FALLBACK_PATH
 import org.matrix.android.sdk.internal.auth.SessionParamsStore
 import org.matrix.android.sdk.internal.crypto.DefaultCryptoService
@@ -77,6 +79,7 @@ import org.matrix.android.sdk.internal.di.UnauthenticatedWithCertificate
 import org.matrix.android.sdk.internal.di.WorkManagerProvider
 import org.matrix.android.sdk.internal.network.GlobalErrorHandler
 import org.matrix.android.sdk.internal.util.createUIHandler
+import timber.log.Timber
 import javax.inject.Inject
 
 @SessionScope
@@ -133,6 +136,7 @@ internal class DefaultSession @Inject constructor(
         @UnauthenticatedWithCertificate
         private val unauthenticatedWithCertificateOkHttpClient: Lazy<OkHttpClient>,
         private val sessionState: SessionState,
+        private val sessionManager: SessionManager
 ) : Session,
         GlobalErrorHandler.Listener {
 
@@ -170,6 +174,15 @@ internal class DefaultSession @Inject constructor(
         globalErrorHandler.listener = null
         sessionState.setIsOpen(false)
     }
+
+    override fun stopActiveTasks() {
+        Timber.d("Cleanup: cancel pending works...")
+        workManagerProvider.cancelAllWorks()
+
+        Timber.d("Cleanup: stop session...")
+        sessionManager.stopSession(sessionId)
+    }
+
 
     override suspend fun clearCache() {
         syncService.get().stopSync()
